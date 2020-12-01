@@ -41,7 +41,7 @@ def index():
         m=form.user.data
         n=form.passl.data
         print(m,n)
-        Admin1 = B_Admin.query.filter_by(A_id=id).first()
+        Admin1 = B_Admin.query.filter_by(A_id==id).first()
         """
         if (l[0]=="Admin")
             return redirect(url_for("admin",id=m))
