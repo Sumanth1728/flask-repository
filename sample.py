@@ -6,7 +6,7 @@ from wtforms import (StringField, BooleanField, DateTimeField,
                      TextAreaField,SubmitField)
 from wtforms.validators import DataRequired
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
-from loginfunc import login
+
 from basecong import app
 # Now create a WTForm Class
 # Lots of fields available:
