@@ -36,7 +36,7 @@ def index():
         # Grab the data from the breed on the form.
 
         try:
-            Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
+            Admin1 = B_Admin.query.filter_by(A_id==form.user.data).first()
             print("A")
             if(Admin1.A_pass==form.passl.data):
                 return redirect(url_for("admin"))
@@ -45,7 +45,7 @@ def index():
 
         except Exception as e:
             try:
-                Emp1 = B_Employee.query.filter_by(E_id=form.user.data).first()
+                Emp1 = B_Employee.query.filter_by(E_id==form.user.data).first()
                 if(Emp1.E_pass==form.passl.data):
                     return redirect(url_for("employee"))
 
@@ -55,7 +55,7 @@ def index():
             except Exception as e:
 
                 try:
-                    cmp1 = B_Customer.query.filter_by(C_id=form.user.data).first()
+                    cmp1 = B_Customer.query.filter_by(C_id==form.user.data).first()
                     if(cmp.C_pass==form.passl.data):
                         return redirect(url_for("customer"))
 

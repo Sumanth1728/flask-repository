@@ -35,6 +35,13 @@ def index():
         m=form.user.data
         n=form.passl.data
         print(m,n)
+<<<<<<< HEAD
+=======
+        Admin1 = B_Admin.query.filter_by(A_id==id).first()
+        """
+        if (l[0]=="Admin")
+            return redirect(url_for("admin",id=m))
+>>>>>>> 89d6f1d93a10347827c76ce1011d6fff4e9f23e0
 
         try:
             Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
