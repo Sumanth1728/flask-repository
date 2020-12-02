@@ -36,6 +36,7 @@ def index():
         n=form.passl.data
         print(m,n)
 <<<<<<< HEAD
+<<<<<<< HEAD
         Admin1 = B_Admin.query.filter_by(A_id==m).first()
         """
         if (l[0]=="Admin")
@@ -57,6 +58,23 @@ def index():
                 if(Emp1.E_pass==form.passl.data):
                     return redirect(url_for("employee",id=m))
 
+=======
+
+        try:
+            Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
+            print("A")
+            if(Admin1.A_pass==form.passl.data):
+                return redirect(url_for("admin",id=m))
+            else:
+                return "username and pasword doesn't match"
+
+        except Exception as e:
+            try:
+                Emp1 = B_Employee.query.filter_by(E_id=form.user.data).first()
+                if(Emp1.E_pass==form.passl.data):
+                    return redirect(url_for("employee",id=m))
+
+>>>>>>> 69c75d426ca84dca25bb039ed97564b8f330f12f
                 else:
                     return "username and pasword doesn't match"
 
