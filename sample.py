@@ -6,7 +6,7 @@ from wtforms import (StringField, BooleanField, DateTimeField,
                      TextAreaField,SubmitField)
 from wtforms.validators import DataRequired
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
-
+from loginfunc import login
 from basecong import app
 # Now create a WTForm Class
 # Lots of fields available:
@@ -35,14 +35,6 @@ def index():
         m=form.user.data
         n=form.passl.data
         print(m,n)
-<<<<<<< HEAD
-<<<<<<< HEAD
-        Admin1 = B_Admin.query.filter_by(A_id==m).first()
-        """
-        if (l[0]=="Admin")
-            return redirect(url_for("admin",id=m))
-=======
->>>>>>> 69c75d426ca84dca25bb039ed97564b8f330f12f
 
         try:
             Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
@@ -58,23 +50,6 @@ def index():
                 if(Emp1.E_pass==form.passl.data):
                     return redirect(url_for("employee",id=m))
 
-=======
-
-        try:
-            Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
-            print("A")
-            if(Admin1.A_pass==form.passl.data):
-                return redirect(url_for("admin",id=m))
-            else:
-                return "username and pasword doesn't match"
-
-        except Exception as e:
-            try:
-                Emp1 = B_Employee.query.filter_by(E_id=form.user.data).first()
-                if(Emp1.E_pass==form.passl.data):
-                    return redirect(url_for("employee",id=m))
-
->>>>>>> 69c75d426ca84dca25bb039ed97564b8f330f12f
                 else:
                     return "username and pasword doesn't match"
 
