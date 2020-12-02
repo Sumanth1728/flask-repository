@@ -7,13 +7,7 @@ from wtforms import (StringField, BooleanField, DateTimeField,
 from wtforms.validators import DataRequired
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
 from loginfunc import login
-
-
-app = Flask(__name__)
-# Configure a secret SECRET_KEY
-# We will later learn much better ways to do this!!
-app.config['SECRET_KEY'] = 'mysecretkey'
-
+from basecong import app
 # Now create a WTForm Class
 # Lots of fields available:
 # http://wtforms.readthedocs.io/en/stable/fields.html
@@ -41,20 +35,41 @@ def index():
         m=form.user.data
         n=form.passl.data
         print(m,n)
-        Admin1 = B_Admin.query.filter_by(A_id=id).first()
-        """
-        if (l[0]=="Admin")
-            return redirect(url_for("admin",id=m))
 
-        elif(l[0]=="Employee"):
-            return redirect(url_for("employee",id=m))
+        try:
+            Admin1 = B_Admin.query.filter_by(A_id=form.user.data).first()
+            print("A")
+            if(Admin1.A_pass==form.passl.data):
+                return redirect(url_for("admin",id=m))
+            else:
+                return "username and pasword doesn't match"
 
-        elif(l[0]=="Customer"):
-            return redirect(url_for("customer",id=m))
+        except Exception as e:
+            try:
+                Emp1 = B_Employee.query.filter_by(E_id=form.user.data).first()
+                if(Emp1.E_pass==form.passl.data):
+                    return redirect(url_for("employee",id=m))
 
-        else:
-            return l[0]
-     """
+                else:
+                    return "username and pasword doesn't match"
+
+            except Exception as e:
+
+                try:
+                    cmp1 = B_Customer.query.filter_by(C_id=form.user.data).first()
+                    if(cmp1.C_pass==form.passl.data):
+                        return redirect(url_for("customer",id=m))
+
+                    else:
+
+                        return "username and pasword doesn't match"
+
+                except Exception as e:
+
+
+                    return(e)
+
+
     return render_template('index.html', form=form)
 
 @app.route('/admin/<id>', methods=['GET', 'POST'])
