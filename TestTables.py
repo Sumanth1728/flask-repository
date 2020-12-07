@@ -7,6 +7,16 @@
 
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
 
+
+
+cuslast = B_Customer.query.all()[-1]
+print(cuslast.keys())
+"""
+cusid='C'+str(int(Emplast.C_id[1:])+1)
+cus1=B_Customer(cusid,"Revanth",22,"Revanth@gmail.com","USA",9879543221,"password",20200)
+db.session.add(cus1)
+db.session.commit()
+
 ###########################
 ###### CREATE ############
 #########################
@@ -37,3 +47,4 @@ employee=B_Employee.query.all()
 print(employee)
 customer=B_Customer.query.all()
 print(customer)
+"""

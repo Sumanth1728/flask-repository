@@ -8,6 +8,7 @@ from wtforms.validators import DataRequired
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
 
 from basecong import app
+from forms import createcustomer
 # Now create a WTForm Class
 # Lots of fields available:
 # http://wtforms.readthedocs.io/en/stable/fields.html
@@ -21,7 +22,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-
+##############################################
+#############Login #########################3
+#############################################
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
@@ -72,15 +75,86 @@ def index():
 
     return render_template('index.html', form=form)
 
+
+##############################################
+#############Admin ##########################
+#############################################
+
 @app.route('/admin/<id>', methods=['GET', 'POST'])
 def admin(id):
 
     return render_template('admin.html',id=id)
 
+@app.route('/admin/<id>/CreateCustomer', methods=['GET', 'POST'])
+def CreateCustomer(id):
+    form=createcustomer()
+    if form.validate_on_submit():
+        print("entered validate")
+        Emplast = B_Customer.query.all()[-1]
+        Empid="C"+str(int(Emplast.C_id[1:])+1)
+        print(Empid,form.name.data,form.age.data,form.email.data,form.address.data,form.phone.data,"password",form.balance.data)
+        cus1=B_Customer(C_id=Empid, name=form.name.data, age=form.age.data, email=form.email.data, address=form.address.data, number=form.phone.data, C_pass="password", balance=form.balance.data)
+        db.session.add(cus1)
+        db.session.commit()
+        return redirect(url_for("admin",id=id))
+
+
+
+    return render_template('CreateNewCustomer.html',id=id,form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##############################################
+#############Employee ##########################
+#############################################
+
+
+
 @app.route('/employee/<id>', methods=['GET', 'POST'])
 def employee(id):
 
     return render_template('employee.html',id=id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##############################################
+#############Customer ##########################
+#############################################
+
 
 @app.route('/customer/<id>', methods=['GET', 'POST'])
 def customer(id):
@@ -90,63 +164,3 @@ def customer(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details
-user=str(input("enter the username"))
-pass1=str(input("enter the password"))
-try:
-    Admin1 = B_Admin.query.filter_by(A_id=user).first()
-    if(Admin1.A_pass==pass1):
-
-        print("admin logged in")
-    else:
-        print(" admin username and pasword doesn't match")
-
-except Exception as e:
-    try:
-        Emp1 = B_Employee.query.filter_by(E_id=user).first()
-        if(Emp1.E_pass==pass1):
-            print("employee logged in")
-
-        else:
-            print("employee username and pasword doesn't match")
-
-    except Exception as e:
-
-        try:
-            cmp1 = B_Customer.query.filter_by(C_id=user).first()
-            if(cmp1.C_pass==pass1):
-
-                print("customer logged in")
-
-            else:
-                print("customer username and pasword doesn't match")
-
-        except Exception as e:
-
-            print("username doesn't exist")
-"""

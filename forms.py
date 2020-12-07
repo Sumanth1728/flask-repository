@@ -3,12 +3,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired,Email,EqualTo,Length
 class createcustomer(FlaskForm):
-    username=StringField('username',validators=[DataRequired(),Length(min=4,max=15)])
-    Email=StringField('Email',validators=[DataRequired(),Email()])
-    phone=StringField('phone',validators=[DataRequired()])
-    state=StringField('state',validators=[DataRequired(),Length(min=3,max=15)])
-    pincode=StringField('pincode',validators=[DataRequired()])
-    address=StringField('address',validators=[DataRequired(),Length(min=10,max=40)])
+    name=StringField('Name',validators=[DataRequired()])
+    email=StringField('Email',validators=[DataRequired()])
+    phone=StringField('Phone Number',validators=[DataRequired()])
+    balance=StringField('Current Desposited Amount',validators=[DataRequired()])
+    age=StringField('Age',validators=[DataRequired()])
+    address=StringField('Address',validators=[DataRequired()])
     submit=SubmitField("create user")
 
 class createemloyee(FlaskForm):

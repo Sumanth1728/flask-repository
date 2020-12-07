@@ -1,0 +1,24 @@
+{% extends "admin.html"%}
+{% block content %}
+<h2>Customer Registration Form</h2>
+{{ form.hidden_tag() }}
+ {{ form.name.label }}      {{ form.name }}
+ <br>
+ <br>
+{{ form.email.label }}       {{ form.email }}
+<br>
+<br>
+{{ form.phone.label }}       {{ form.phone }}
+<br>
+<br>
+{{ form.age.label }}       {{ form.age }}
+<br>
+<br>
+{{ form.address.label }}       {{ form.address }}
+<br>
+<br>
+{{ form.balance.label }}       {{ form.balance }}
+<br>
+<br>
+ {{ form.submit() }}
+{% endblock %}
