@@ -1,0 +1,10 @@
+# add Expiry date to card details
+#add access type to card details
+#add logs tables
+#find how to get real time in python
+#add email operation
+#add card details as link so that user can click on that
+#add Gender to customer Details and employee details
+#see how to get big text box in forms for Address
+# put email as unique in customer table
+#add password changing portal

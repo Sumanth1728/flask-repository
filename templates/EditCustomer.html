@@ -1,0 +1,21 @@
+{% extends "admin.html"%}
+{% block content %}
+
+<h1>Edit Customers</h1>
+
+    <br>
+    <br>
+<form action="" method="post" novalidate>
+
+  {{ form1.hidden_tag() }}
+
+   {{ form1.user.label }} {{ form1.user }}
+
+   {{ form1.submit() }}
+
+    </form>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{{ form.hidden_tag() }}
+ {{ form.user.label }} {{ form.user(class='input--style-3') }}
+ <br>
+ <br>
+ {{ form.submit() }}
+
+  {% if a!=[] %}
+  <ul>
+      {% for pup in a %}
+      <li>{{pup}}</li>
+      {% endfor %}
+    </ul>
+    <p>no records found</p>
+  {% else %}
+    <p>Hmm, Rufus isn't in this list.</p>
+  {% endif %}

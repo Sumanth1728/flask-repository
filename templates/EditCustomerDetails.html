@@ -1,0 +1,66 @@
+{% extends "admin.html"%}
+{% block content %}
+
+   <h1>Edit Customer Details</h1>
+   <br>
+   <br>
+   <form action="" method="post" novalidate>
+       {{ form.hidden_tag() }}
+
+     <table border = "0" cellspacing=20%>
+       <tr>
+          <th>Customer id</th>
+          <td>:</td>
+            <td>{{custm.C_id}}</td>
+
+       </tr>
+       <tr>
+          <th>Email</th>
+          <td>:</td>
+            <td>{{custm.C_email}}</td>
+            
+
+       </tr>
+
+            <tr>
+               <th>{{ form.name.label }}</th>
+               <td>:</td>
+                 <td>{{custm.C_name}}</td>
+                <td>change to</td>
+               <td>{{ form.name }}</td>
+            </tr>
+
+
+
+            <tr>
+              <th>{{ form.phone.label }} </th>
+              <td>:</td>
+              <td>{{custm.C_number}}</td>
+             <td>change to</td>
+              <td>{{ form.phone }}</td>
+            </tr>
+
+            <tr>
+              <th>{{ form.age.label }}</th>
+              <td>:</td>
+              <td>{{custm.C_age}}</td>
+             <td>change to</td>
+              <td>{{ form.age }}</td>
+            </tr>
+
+            <tr>
+              <th>{{ form.address.label }} </th>
+              <td>:</td>
+              <td>{{custm.C_address}}</td>
+             <td>change to</td>
+              <td>{{ form.address }}</td>
+            </tr>
+
+         </table>
+         <br>
+         <br>
+            {{ form.submit() }}
+       </form>
+
+
+{% endblock %}

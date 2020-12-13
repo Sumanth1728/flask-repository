@@ -49,7 +49,7 @@ class B_Employee(db.Model):
     E_id = db.Column(db.Text,primary_key=True)
     E_name = db.Column(db.Text)
     E_age = db.Column(db.Integer)
-    E_email=db.Column(db.Text)
+    E_email=db.Column(db.Text,unique=True)
     E_address=db.Column(db.Text)
     E_number = db.Column(db.Integer)
     E_pass=db.Column(db.Text)
@@ -92,7 +92,7 @@ class B_Customer(db.Model):
     C_id = db.Column(db.Text,primary_key=True)
     C_name = db.Column(db.Text)
     C_age = db.Column(db.Integer)
-    C_email=db.Column(db.Text)
+    C_email=db.Column(db.Text,unique=True)
     C_address=db.Column(db.Text)
     C_number = db.Column(db.Integer)
     C_pass=db.Column(db.Text)
@@ -133,16 +133,22 @@ class B_Customer_transactions(db.Model):
     C_id = db.Column(db.Text,db.ForeignKey('B_Customer.C_id'))
     T_id = db.Column(db.Integer)
     Card_Number=db.Column(db.Integer,db.ForeignKey('B_Customer_Card_Details.Card_No'))
+    T_amount=db.Column(db.Float)
+    T_Type=db.Column(db.Text)
+    R_id=db.Column(db.Text)
 
-    def __init__(self,C_id,T_id,Card_Number):
+    def __init__(self,C_id,T_id,Card_Number,T_amount,T_Type,R_id):
 
         self.C_id = C_id
         self.T_id = T_id
         self.Card_Number=Card_Number
+        self.T_amount=T_amount
+        self.T_Type=T_Type
+        self.R_id=R_id
 
 
     def __repr__(self):
-        return [self.id,self.C_id,self.self.T_id,self.Card_Number]
+        return [self.id,self.C_id,self.self.T_id,self.Card_Number,self.T_amount,self.T_Type,self.R_id]
 
 
 
@@ -157,9 +163,11 @@ class B_Customer_Card_Details(db.Model):
     __tablename__ = 'B_Customer_Card_Details'
     id = db.Column(db.Integer,primary_key=True)
     C_id = db.Column(db.Text,db.ForeignKey('B_Customer.C_id'))
-    Card_Type = db.Column(db.Text,unique=True)
+    Card_Type = db.Column(db.Text)
     Card_No = db.Column(db.Integer,unique=True)
     Card_Activate=db.Column(db.Boolean)
+    # add Expiry date to card details
+    #add access type to card details
     Transacs = db.relationship('B_Customer_transactions',backref='B_Customer_Card_Details',lazy='dynamic')
 
 

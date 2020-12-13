@@ -1,18 +1,7 @@
 {% extends "admin.html"%}
 {% block content %}
-<h2>Customer Registration Form</h2>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-           <div class="alert alert-warning alert-dismissible fade show" role="alert">
- <strong>{{message }}</strong>
- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                      </div>
-
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-<form  method="POST" >
+<h2>Employee Registration Form</h2>
+<form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
   <table border = "0" cellspacing=20%>
 
@@ -45,11 +34,7 @@
            <td>:</td>
            <td>{{ form.address }}</td>
          </tr>
-         <tr>
-           <th>{{ form.balance.label }} </th>
-           <td>:</td>
-           <td>{{ form.balance }}</td>
-         </tr>
+         
       </table>
       <br>
       <br>

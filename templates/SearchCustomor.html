@@ -1,20 +1,85 @@
 {% extends "admin.html"%}
 {% block content %}
-{{ form.hidden_tag() }}
- {{ form.user.label }} {{ form.user(class='input--style-3') }}
- <br>
- <br>
- {{ form.submit() }}
 
-  {% if a!=[] %}
-  <ul>
-      {% for pup in a %}
-      <li>{{pup}}</li>
-      {% endfor %}
-    </ul>
-    <p>no records found</p>
-  {% else %}
-    <p>Hmm, Rufus isn't in this list.</p>
-  {% endif %}
+
+
+    <br>
+    <br>
+<form action="" method="post" novalidate>
+
+  {{ form.hidden_tag() }}
+
+   {{ form.user.label }} {{ form.user }}
+
+   {{ form.submit() }}
+
+    </form>
+
+
+   {% if cust %}
+   <h1>Customer Details</h1>
+   <br>
+   <br>
+   <table border = "0" cellspacing=20%>
+   <tr>
+      <th>Name</th>
+      <td>:</td>
+      <td>{{ cust.C_name }}</td>
+   </tr>
+
+   <tr>
+     <th>Email</th>
+     <td>:</td>
+     <td>{{ cust.C_email }}</td>
+   </tr>
+
+   <tr>
+     <th>Phone Number </th>
+     <td>:</td>
+     <td>{{ cust.C_number }}</td>
+   </tr>
+
+   <tr>
+     <th>Age</th>
+     <td>:</td>
+     <td>{{ cust.C_age }}</td>
+   </tr>
+   <tr>
+     <th>Address </th>
+     <td>:</td>
+     <td>{{ cust.C_address }}</td>
+   </tr>
+   <tr>
+     <th>Current Balance </th>
+     <td>:</td>
+     <td>{{ cust.C_balance }}</td>
+   </tr>
+</table>
+<br>
+<br>
+<h1>Customer Card Details</h1>
+<br>
+<br>
+<table border = "1" cellspacing=20%>
+<tr>
+   <th>Card Number</th>
+   <th>Card Type</th>
+   <th>activation Status</th>
+   <th>Connected to Customer</th>
+   </tr>
+   {% for card in cards1 %}
+   <tr>
+     <th>{{ card.Card_No }}</th>
+     <td>{{ card.Card_Type }}</td>
+     <td>{{ card.Card_Activate }}</td>
+     <td>{{ card.C_id }}</td>
+   </tr>
+   {% endfor %}
+</table>
+
+
+   {% else %}
+     <p>No Customer records  found .</p>
+   {% endif %}
 
 {% endblock %}
