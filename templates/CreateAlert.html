@@ -1,24 +1,14 @@
-{% extends "admin.html"%}
+if{% if Atype=="Admin" %}
+    {% extends "admin.html" %}
+{% elif Atype=="Employee"  %}
+    {% extends "employee.html" %}
+{% else %}
+    {% extends "customer.html" %}
+{% endif %}
+
 {% block content %}
-<h6>Customer added</h6>
-{% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                <span>{{ message }}</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    {% endif %}
 
-
-
-    {% for mess in get_flashed_messages()  %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-         {% endfor %}
-
+<div class="alert alert-success" role="alert">
+  {{msg}}
+</div>
 {% endblock %}

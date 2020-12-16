@@ -1,10 +1,26 @@
+{% if Acctype=="Admin"%}
 {% extends "admin.html"%}
+{% else %}
+{% extends "employee.html"%}
+{% endif %}
+
 {% block content %}
 
-
+<h1>Search Customer</h1>
 
     <br>
     <br>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+               <div class="alert alert-warning alert-dismissible fade show" role="alert">
+     <strong>{{message }}</strong>
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 <form action="" method="post" novalidate>
 
   {{ form.hidden_tag() }}
@@ -19,13 +35,24 @@
    {% if cust %}
    <h1>Customer Details</h1>
    <br>
+   <a style="right:0%;" href="{{url_for('EditCustomerDetails',id=id,cid=cust.C_id,Acctype=Acctype)}}"><b>Edit Customer</b></a>
    <br>
    <table border = "0" cellspacing=20%>
-   <tr>
-      <th>Name</th>
-      <td>:</td>
-      <td>{{ cust.C_name }}</td>
-   </tr>
+     <tr>
+        <th>First Name</th>
+        <td>:</td>
+        <td>{{ cust.C_firstname }}</td>
+     </tr>
+     <tr>
+        <th>Last Name</th>
+        <td>:</td>
+        <td>{{ cust.C_lastname }}</td>
+     </tr>
+     <tr>
+        <th>Gender</th>
+        <td>:</td>
+        <td>{{ cust.C_gender }}</td>
+     </tr>
 
    <tr>
      <th>Email</th>
@@ -64,22 +91,29 @@
 <tr>
    <th>Card Number</th>
    <th>Card Type</th>
+   <th>Customer Id</th>
+   <th>Usagetype</th>
+   <th>Card Status Type</th>
+   <th>ExpiryDate</th>
    <th>activation Status</th>
-   <th>Connected to Customer</th>
    </tr>
    {% for card in cards1 %}
    <tr>
      <th>{{ card.Card_No }}</th>
      <td>{{ card.Card_Type }}</td>
-     <td>{{ card.Card_Activate }}</td>
      <td>{{ card.C_id }}</td>
+     <td>{{ card.Usagetype }}</td>
+     <td>{{ card.Card_Status_Type }}</td>
+     <td>{{ card.ExpiryDate }}</td>
+     <td>{{ card.Card_Activate }}</td>
    </tr>
    {% endfor %}
 </table>
 
 
+
    {% else %}
-     <p>No Customer records  found .</p>
+     <p>.</p>
    {% endif %}
 
 {% endblock %}

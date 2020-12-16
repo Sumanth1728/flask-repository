@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 <style>
+
+
 * {
     box-sizing: border-box;
 }
@@ -130,10 +132,10 @@ text-align:center;
 <body >
 <div class="taskbar">
 <ul>
-<li><a href="edison.html">logout</a></li>
+<li><a href="{{url_for('index')}}">logout</a></li>
 <li><a href="edison.html">about </a></li>
 <li><a href="edison.html">contact</a></li>
-<li><a href="edison.html">Home</a></li>
+<li><a href="{{url_for('admin',id=id)}}">Home</a></li>
 </ul>
 </div>
 <div>
@@ -141,14 +143,14 @@ text-align:center;
 
 <li style="float:none"><a class="kl" href="{{url_for('admin',id=id)}}"><h1>HOME</h1></a></li>
 <li style="float:none"><a class="kl" href="{{url_for('CreateEmployee',id=id)}}"><b>Create Employee</b> </a></li>
-<li style="float:none"><a class="kl" href="edison.html"><b>Employee records</b></a></li>
-<li style="float:none"><a class="kl" href="{{url_for('CreateCustomer',id=id)}}"><b>Create customer</b> </a></li>
-<li style="float:none"><a class="kl" href="{{url_for('SearchCustomer',id=id)}}"><b> search customer</b></a></li>
-<li style="float:none"><a class="kl" href="{{url_for('EditCustomer',id=id)}}"><b>Edit Customer</b></a></li>
-<li style="float:none"><a class="kl" href="edison.html"><b>change Employee Details</b></a></li>
-<li style="float:none"><a class="kl" href="edison.html"><b>Issue Cards</b></a></li>
-<li style="float:none"><a class="kl" href="edison.html"><b>deactivate  Customer cards </b></a></li>
-<li style="float:none"><a class="kl" href="edison.html"><b> Add amount to customer account</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('Logs',id=id)}}"><b>View Logs</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('CreateCustomer',id=id,Acctype='Admin')}}"><b>Create customer</b> </a></li>
+<li style="float:none"><a class="kl" href="{{url_for('SearchCustomer',id=id,Acctype='Admin')}}"><b> search customer</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('EditCustomer',id=id,Acctype='Admin')}}"><b>Edit Customer</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('EditEmployeee',id=id,Acctype='Admin')}}"><b>change Employee Details</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('IssueCards',id=id)}}"><b>Issue Cards</b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('DeactivateCustomerCards',id=id,Acctype='Admin')}}"><b>deactivate  Customer cards </b></a></li>
+<li style="float:none"><a class="kl" href="{{url_for('AddAmounttoCustomerAccount',id=id,Acctype='Admin')}}"><b> Add amount to customer account</b></a></li>
 </div>
 
 

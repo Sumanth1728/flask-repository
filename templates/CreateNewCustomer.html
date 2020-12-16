@@ -1,4 +1,9 @@
+{% if Acctype=="Admin"%}
 {% extends "admin.html"%}
+{% else %}
+{% extends "employee.html"%}
+{% endif %}
+
 {% block content %}
 <h2>Customer Registration Form</h2>
 {% with messages = get_flashed_messages() %}
@@ -17,9 +22,19 @@
   <table border = "0" cellspacing=20%>
 
          <tr>
-            <th>{{ form.name.label }}</th>
+            <th>{{ form.firstname.label }}</th>
             <td>:</td>
-            <td>{{ form.name }}</td>
+            <td>{{ form.firstname }}</td>
+         </tr>
+         <tr>
+            <th>{{ form.lastname.label }}</th>
+            <td>:</td>
+            <td>{{ form.lastname }}</td>
+         </tr>
+         <tr>
+            <th>{{ form.gender.label }}</th>
+            <td>:</td>
+            <td>{{ form.gender }}</td>
          </tr>
 
          <tr>
