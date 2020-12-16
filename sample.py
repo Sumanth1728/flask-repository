@@ -7,7 +7,8 @@ from wtforms import (StringField, BooleanField, DateTimeField,
 from wtforms.validators import DataRequired
 from tables import db, B_Admin ,B_Employee ,B_Customer,B_Customer_transactions,B_Customer_Card_Details,CardRequests,logs,CardDeActLogs
 from datetime import datetime
-from basecong import app
+from basecong import app,mail
+from flask_mail import *
 from forms import createcustomer,searchform,EditEmployee,createemloyee,RequestCards,AmountTransferForm,EvaluationForm
 # Now create a WTForm Class
 # Lots of fields available:
@@ -106,8 +107,13 @@ def CreateCustomer(id,Acctype):
         log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Created a New customer",OtherId=cusid,ActionTime=dt_string)
         db.session.add(log)
         db.session.commit()
-        msg="Customer Successfully Created"
-        return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
+        msg1="Customer Successfully Created"
+        sub="Account Created"
+        htmlbody=f"Hello <b>{form.firstname.data}</b>,<br><br>Your Account has been Created<br><b>Username</b> : {cusid}<br><b>Password</b> : password<br><br>please login to portal to find more<br>if not done by you please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[form.email.data])
+        msg.html = htmlbody
+        mail.send(msg)
+        return render_template('CreateAlert.html',id=id,msg=msg1,Atype=Acctype)
     else:
         err=form.errors
         for i in err:
@@ -131,8 +137,13 @@ def CreateEmployee(id):
         log=logs(Actor_id=id,Actor_Type="Admin",ActionDone="Created a New Employee ",OtherId=empid,ActionTime=dt_string)
         db.session.add(log)
         db.session.commit()
-        msg="Employee Successfully Created"
-        return render_template('CreateAlert.html',id=id,msg=msg,Atype="Admin")
+        msg1="Employee Successfully Created"
+        sub="Account Created"
+        htmlbody=f"Hello <b>{form.firstname.data}</b>,<br><br>welcome to the Organization.we are glad that ypu are joining us<br>Your Account has been Created<br><b>Username</b> : {empid}<br><b>Password</b> : password<br><br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[form.email.data])
+        msg.html = htmlbody
+        mail.send(msg)
+        return render_template('CreateAlert.html',id=id,msg=msg1,Atype="Admin")
     else:
         err=form.errors
         for i in err:
@@ -191,8 +202,13 @@ def EditCustomerDetails(id,cid,Acctype):
         log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Edited Customer Details",OtherId=cid,ActionTime=dt_string)
         db.session.add(log)
         db.session.commit()
-        msg="Customer Details Successfully Edited"
-        return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
+        sub="Account Details Edited"
+        htmlbody=f"Hello <b>{custm.C_firstname}</b>,<br><br>Your Account Account Details  has been edited <br><b>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[custm.C_email])
+        msg.html = htmlbody
+        mail.send(msg)
+        msg1="Customer Details Successfully Edited"
+        return render_template('CreateAlert.html',id=id,msg=msg1,Atype=Acctype)
     else:
         err=form.errors
         for i in err:
@@ -255,8 +271,13 @@ def EvaluateIssueCardRequest(id,rid):
             log=logs(Actor_id=id,Actor_Type="Admin",ActionDone="Issue a new card for an customer ",OtherId=rid,ActionTime=dt_string)
             db.session.add(log)
             db.session.commit()
-            msg="Issued a new card succesfully"
-            return render_template('CreateAlert.html',id=id,msg=msg,Atype="Admin")
+            sub="Card Approved"
+            htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>Your Request for new Card is Approved <br><b>Reference Id</b> :{rid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
+            msg1="Issued a new card succesfully"
+            return render_template('CreateAlert.html',id=id,msg=msg1,Atype="Admin")
         else:
             db.session.delete(reqs)
             now = datetime.now()
@@ -264,6 +285,11 @@ def EvaluateIssueCardRequest(id,rid):
             log=logs(Actor_id=id,Actor_Type="Admin",ActionDone="Declined a Customer Request for new card ",OtherId=rid,ActionTime=dt_string)
             db.session.add(log)
             db.session.commit()
+            sub="Card Declined"
+            htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>Your Request for new Card is Declined  <br><b>Reference Id</b> :{rid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
             msg="Declined a Customer Request for new card"
             return render_template('CreateAlert.html',id=id,msg=msg,Atype="Admin")
     else:
@@ -297,6 +323,11 @@ def EvaluateDeactivateCardRequest(id,rid,Acctype):
             log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Accepted Customer Request for card Deactivation ",OtherId=rid,ActionTime=dt_string)
             db.session.add(log)
             db.session.commit()
+            sub="Card Deactivation Request Approved"
+            htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>Your Request for  Card Deactivation is Approved  <br><b>Reference Id</b> :{rid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
             msg="Accepted Customer Request for card Deactivation"
             return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
         else:
@@ -307,6 +338,11 @@ def EvaluateDeactivateCardRequest(id,rid,Acctype):
             log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Declined Customer Request for card Deactivation ",OtherId=rid,ActionTime=dt_string)
             db.session.add(log)
             db.session.commit()
+            sub="Card Deactivation Request Declined"
+            htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>Your Request for Card Deactivation is Declined  <br><b>Reference Id</b> :{rid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
             msg="Declined Customer Request for card Deactivation"
             return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
     else:
@@ -359,6 +395,11 @@ def AddAmounttoCustomerAccount1(id,cid,Acctype):
         log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Added Amount to customer Account ",OtherId=cid,ActionTime=dt_string)
         db.session.add(log)
         db.session.commit()
+        sub=f"Amount Rs.{form.Amount.data} Credited into your Account"
+        htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br> An Amount of Rs.{form.Amount.data} credited into your Account  <br><br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+        msg.html = htmlbody
+        mail.send(msg)
         msg="Succesfully Added Amount to the Customer Account"
         return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
     else:
@@ -430,6 +471,11 @@ def EditEmployeeDeatils(id,cid,Acctype):
         log=logs(Actor_id=id,Actor_Type=Acctype,ActionDone="Edited Employee Details",OtherId=cid,ActionTime=dt_string)
         db.session.add(log)
         db.session.commit()
+        sub="Account Details Edited"
+        htmlbody=f"Hello <b>{custm.E_firstname}</b>,<br><br>Your Account Account Details  has been edited <br><b>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[custm.E_email])
+        msg.html = htmlbody
+        mail.send(msg)
         msg="Employee Details Successfully Edited"
         return render_template('CreateAlert.html',id=id,msg=msg,Atype=Acctype)
     else:
@@ -523,11 +569,17 @@ def CustomerCardDetails(id):
 @app.route('/customer/<id>/RequestNewCard', methods=['GET', 'POST'])
 def RequestNewCard(id):
     form = RequestCards()
+    cust=B_Customer.query.filter_by(C_id=id).first()
     # If the form is valid on submission (we'll talk about validation next)
     if form.validate_on_submit():
         Cardn=CardRequests(C_id=id, Card_Type=form.CardType.data,Card_Status_Type=form.CardStatusType.data,Usagetype=form.Usagetype.data, Request_Status="Processing")
         db.session.add(Cardn)
         db.session.commit()
+        sub="New Card Request Generated"
+        htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>A request for new card is generated from your account  <br><b>Reference Id</b> :{Cardn.id}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+        msg.html = htmlbody
+        mail.send(msg)
         msg="Your Request is submitted succesfully soon your staff will review your Request.Please check your email for futher Information"
         return render_template('CreateAlert.html',id=id,msg=msg,Atype="customer")
 
@@ -598,6 +650,16 @@ def CustomerTransferFunds1(id,cid):
             db.session.add(tarns)
             db.session.add(tarns1)
             db.session.commit()
+            sub=f"Amount of {form.Amount.data} is Dredited from your Account "
+            htmlbody=f"Hello <b>{cust1.C_firstname}</b>,<br><br>An Amount of Rs.{form.Amount.data} is Debited  from your account  <br><b>Reference Id</b> :{tid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust1.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
+            sub=f"Amount of {form.Amount.data} is Credited into your Account "
+            htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>Amount{form.Amount.data} is Credited into your Account <br><b>Reference Id</b> :{tid}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+            msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+            msg.html = htmlbody
+            mail.send(msg)
             msg="Your Request is submitted succesfully .Please refer to your email for futher Details "
             return render_template('CreateAlert.html',id=id,msg=msg,Atype="customer")
 
@@ -613,6 +675,7 @@ def CustomerBalanceEnquiry(id):
 
 @app.route('/customer/<id>/CustomerCardDeavtivateRequest', methods=['GET', 'POST'])
 def CustomerCardDeavtivateRequest(id):
+    cust=B_Customer.query.filter_by(C_id=id).first()
     cards=B_Customer_Card_Details.query.filter_by(C_id=id).all()
     a=[]
     for card in cards:
@@ -628,8 +691,14 @@ def CustomerCardDeavtivateRequest(id):
     form=AmountTransferForm()
     if form.validate_on_submit():
         req=CardDeActLogs(C_id=id,CardNo=str(form.card1.data),DeActReason=form.reason.data)
+        cust=B_Customer.query.filter_by(C_id=id).first()
         db.session.add(req)
         db.session.commit()
+        sub=f"A request for card Deactivation is rised from your Account "
+        htmlbody=f"Hello <b>{cust.C_firstname}</b>,<br><br>A request for card Deactivation is rised from your Account  <br><b>Reference Id</b> :{req.id}<br>please login to portal to find more<br>if not done on your request, please report us<br><b>Best Wishes,</b><br><br>Team Bank Application"
+        msg = Message(sub, sender = 'bankapplication24@gmail.com', recipients=[cust.C_email])
+        msg.html = htmlbody
+        mail.send(msg)
         msg="Your Request is submitted succesfully soon your staff will review your Request.Please check your email for futher Information"
         return render_template('CreateAlert.html',id=id,msg=msg,Atype="customer")
     else:
