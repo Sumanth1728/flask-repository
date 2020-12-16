@@ -1,9 +1,0 @@
-
-#find how to get real time in python
-#add email operation
-#add card details as link so that user can click on that
-#see how to get big text box in forms for Address
-# put email as unique in customer table
-#add password changing portal
-#add table lines to the tables
-# add proper Description for Transactions
