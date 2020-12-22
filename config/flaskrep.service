@@ -7,7 +7,7 @@ User=ec2-user
 Group=nginx
 WorkingDirectory=/var/www
 Environment="PATH=/var/www/venv/bin"
-ExecStart=/var/www/venv/bin/uwsgi --ini config/flasktodo.ini
+ExecStart=/var/www/venv/bin/uwsgi --ini config/flaskrep.ini
 
 [Install]
 WantedBy=multi-user.target
